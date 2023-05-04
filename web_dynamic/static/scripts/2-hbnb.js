@@ -1,8 +1,8 @@
-$(function() {
+$(function () {
   const checkbox = $('.amenity_checkbox');
-  let checkedAmenities = {};
+  const checkedAmenities = {};
 
-  checkbox.on('change', function() {
+  checkbox.on('change', function () {
     const amenityId = $(this).data('id');
     const amenityName = $(this).data('name');
 
@@ -12,15 +12,15 @@ $(function() {
     } else {
       // Remove amenity id and name from object if checkbox is unchecked
       delete checkedAmenities[amenityId];
-      }
+    }
 
     // update the text of the <h4> element with the names of the checked amenities
-    let selectedAmenities = Object.values(checkedAmenities).join(', ');
+    const selectedAmenities = Object.values(checkedAmenities).join(', ');
     $('.amenities h4').text(selectedAmenities);
-    });
+  });
 
   const stat = $('div#api_status');
-  
+
   $.ajax({
     type: 'GET',
     url: 'http://127.0.0.1:5001/api/v1/status/',
