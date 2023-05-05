@@ -91,7 +91,7 @@ $(function () {
 
       $(desc).addClass('description');
       if (place.description) {
-        $(desc).text(place.description);
+        $(desc).html(place.description);
       } else {
         $(desc).text('safe');
       }
