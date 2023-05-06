@@ -13,7 +13,6 @@ $(function () {
       // Remove amenity id and name from object if checkbox is unchecked
       delete checkedAmenities[amenityId];
     }
-
     // update the text of the <h4> element with the names of the checked amenities
     const selectedAmenities = Object.values(checkedAmenities).join(', ');
     $('.amenities h4').text(selectedAmenities);
@@ -105,15 +104,15 @@ $(function () {
 
 // filter places based on checked amenities when button clicked
 
-$('button').on('click', ()=>{
+$('button').on('click', () => {
   $.ajax({
     type: 'POST',
     url: 'http://127.0.0.1:5001/api/v1/places_search/',
-    data: JSON.stringify({"amenities": Object.values(checkedAmenities)}),
+    data: JSON.stringify({"amenities": Object.keys(checkedAmenities)}),
     contentType: 'application/json',
     success: (data, textStatus, jqXHR) => {
       if (jqXHR.status === 200) {
-	$('section.places').empty();
+	      $('section.places').empty();
         populate(data);
       }
     }
