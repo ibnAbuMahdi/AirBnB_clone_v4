@@ -146,8 +146,11 @@ $(function () {
   }
 
 // toggle reviews
-  places.each((i, p_a) => {
-	$(p_a).find('.reviews h2 span').on('click', () => {
+  const articles = $('section.places')[0];
+  console.log(articles[0]);
+  $.each(articles, (i, p_a) => {
+  console.log(p_a);
+	$(p_a).find('article').find('span').on('click', function() {
 		if ($(this).text() === 'show'){
 			displayReviews(i, p_a);
 			$(this).text('hide');
@@ -174,11 +177,11 @@ $(function () {
 				const p = $('<p>').html(rvw.text);
 				const li = $('<li>').append(userDate).append(p);
 				list.append(li);
-			}
+			});
 			p_a.find('.reviews').append(list);
 		}
 	  },
-    	  error: () => {
+    	  error: (error) => {
       		console.log(error.status);
     	  }
   	});		
@@ -194,7 +197,7 @@ function getUsers(reviews){
           	users.push(u_data.first_name + ' ' + u_data.last_name);
             	}
           });
-  	}
+  	});
   return users;
 }
 // remove_reviews
