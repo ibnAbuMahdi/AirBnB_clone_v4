@@ -146,10 +146,8 @@ $(function () {
   }
 
 // toggle reviews
-  const articles = $('section.places')[0];
-  console.log(articles[0]);
-  $.each(articles, (i, p_a) => {
-  console.log(p_a);
+  $("article").each(function(i, p_a) {
+  alert(i);
 	$(p_a).find('article').find('span').on('click', function() {
 		if ($(this).text() === 'show'){
 			displayReviews(i, p_a);
