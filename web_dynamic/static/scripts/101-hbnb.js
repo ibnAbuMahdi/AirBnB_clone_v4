@@ -82,11 +82,23 @@ $(function () {
         populate(data);
       }
     }
-  });
+  }).promise().done(() => {
+    // add reviews
+  $("article span").on('click', function() {
+      if ($(this).text() === 'show'){
+			displayReviews($(this).closest('article'));
+			$(this).text('hide');
+		  } else {
+			  removeReviews($(this).closest('article'));
+			  $(this).text('show');
+		}
+    });
+    });
 
   function populate (data) {
     data.forEach((place, i, arr) => {
       const article = document.createElement('article');
+      $(article).attr('id', place.id);
 
       const title = document.createElement('div');
       const title_name = document.createElement('h2');
@@ -145,32 +157,20 @@ $(function () {
     });
   }
 
-// toggle reviews
-  $("article").each(function(i, p_a) {
-  alert(i);
-	$(p_a).find('article').find('span').on('click', function() {
-		if ($(this).text() === 'show'){
-			displayReviews(i, p_a);
-			$(this).text('hide');
-		} else {
-			removeReviews(p_a);
-			$(this).text('show');
-		}	
-	});
-  });
-
 // display reviews
 
-  function displayReviews(i, p_a){
-	const place_id = places_id[i];
+  function displayReviews(p_a){
+	const place_id = $(p_a).attr('id');
 	$.ajax({
     	  type: 'GET',
     	  url: 'http://127.0.0.1:5001/api/v1/places/'+place_id+'/reviews',
     	  success: (data, textStatus, jqXHR) => {
       	  	if (jqXHR.status === 200) {
       			let usernames = getUsers(data);
+            console.log(usernames);
 			const list = $('<ul>');
 			data.forEach((rvw, ix, jx) => {
+        console.log(usernames);
 				const userDate = $('<h3>').text(usernames[ix]+ ' ' + rvw.updated_at);
 				const p = $('<p>').html(rvw.text);
 				const li = $('<li>').append(userDate).append(p);
@@ -195,12 +195,13 @@ function getUsers(reviews){
           	users.push(u_data.first_name + ' ' + u_data.last_name);
             	}
           });
+    //console.log(users);
   	});
   return users;
 }
 // remove_reviews
 function removeReviews(p_a){
-	p_a.find('.reviews ul').remove();
+	p_a.find('.reviews').find('ul').remove();
 }
 // filter places based on checked amenities when button clicked
 
@@ -216,6 +217,17 @@ $('button').on('click', () => {
         populate(data);
       }
     }
-  });		
+  }).promise().done(() => {
+    // add reviews
+  $("article span").on('click', function() {
+      if ($(this).text() === 'show'){
+			displayReviews($(this).closest('article'));
+			$(this).text('hide');
+		  } else {
+			  removeReviews($(this).closest('article'));
+			  $(this).text('show');
+		}
+    });
+    });
 });
 });
